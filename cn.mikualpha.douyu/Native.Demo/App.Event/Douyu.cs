@@ -159,7 +159,12 @@ class DouyuCheck
                     return text;
                 }
             }
-            catch (Exception) { }
+            catch (HttpRequestException) {
+                return "";
+            }
+            catch (ArgumentNullException) {
+                return "";
+            }
         }
         return "";
     }

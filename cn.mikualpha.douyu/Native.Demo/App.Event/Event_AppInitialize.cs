@@ -72,7 +72,7 @@ namespace Native.Demo.App.Event
 			expStr.AppendFormat("[异常类型]: {0}\n", e.Exception.Source.ToString());
 			expStr.AppendFormat("[异常名称]: {0}\n", e.Exception.Message);
 			expStr.AppendFormat("[异常堆栈]: {0}\n", e.Exception.StackTrace);
-			EnApi.Instance.AddFatalError(expStr.ToString()); //将异常弹回酷Q处理
+			//EnApi.Instance.AddFatalError(expStr.ToString()); //将异常弹回酷Q处理
 		}
 		#endregion
 	}
