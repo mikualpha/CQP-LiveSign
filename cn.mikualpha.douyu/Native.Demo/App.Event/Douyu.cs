@@ -61,6 +61,7 @@ class DouyuCheck
 
     public void startCheck()
     {
+        if (running) return;
         running = true;
         thread = new Thread(checkStatus);
         thread.Start();
@@ -68,6 +69,7 @@ class DouyuCheck
 
     public void endCheck()
     {
+        if (!running) return;
         try
         {
             running = false;
@@ -86,10 +88,10 @@ class DouyuCheck
                 DouyuData status = getJson(i);
                 if (status == null) break;
 
-                if (SQLiteManager.getInstance().getLiveStatus(i) != status.room_status)
+                if (SQLiteManager.getInstance().getLiveStatus(i).ToString() != status.room_status)
                 {
-                    SQLiteManager.getInstance().setLiveStatus(i, status.room_status);
-                    if (status.room_status == 1) //正在直播
+                    SQLiteManager.getInstance().setLiveStatus(i, int.Parse(status.room_status));
+                    if (status.room_status == "1") //正在直播
                     {
                         string[] users = SQLiteManager.getInstance().getUserByRoom(i); //获取所有订阅用户并发送消息
                         foreach (string j in users) { sendPrivateMessage(status, j); }
@@ -127,13 +129,6 @@ class DouyuCheck
         DouyuData temp = getJson(room);
         if (temp == null) return "";
         return temp.owner_name;
-    }
-
-    public int getStatus(string room)
-    {
-        DouyuData temp = getJson(room);
-        if (temp == null) return 2;
-        return temp.room_status;
     }
 
     private DouyuData getJson(string room)
@@ -211,6 +206,6 @@ public class DouyuDataTemp
 public class DouyuData
 {
     public int room_id;
-    public int room_status;
+    public string room_status;
     public string owner_name;
 }

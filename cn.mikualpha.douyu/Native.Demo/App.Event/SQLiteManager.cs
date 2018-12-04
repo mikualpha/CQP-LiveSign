@@ -4,7 +4,7 @@ using Native.Sdk.Cqp.Api;
 
 class SQLiteManager
 {
-    private string path = EnApi.Instance.GetAppDirectory() + "config.db";
+    private string path = "data/app/cn.mikualpha.douyu/config.db";
     private static SQLiteManager ins = null;
     private SQLiteConnection _connection = null;
 
@@ -111,7 +111,7 @@ class SQLiteManager
             statement.Step();
         }
 
-        sql = "INSERT OR REPLACE INTO status VALUES(" + room + ",2);";
+        sql = "INSERT OR IGNORE INTO status VALUES(" + room + ", 2);";
         using (var statement = _connection.Prepare(sql))
         {
             statement.Step();
