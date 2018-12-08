@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Native.Sdk/Cqp.Tool
+/Native.Csharp/Sdk.Cqp/Api/CnApi.cs
