@@ -10,6 +10,12 @@
             {
                 int index = context.Msg.IndexOf('-');
                 string room = stringSecurityProcess(context.Msg.Substring(index + 1));
+                if (room == "")
+                {
+                    Common.CqApi.SendGroupMessage(context.FromQQ, "输入格式错误！");
+                    context.Handled = true;
+                    return;
+                }
                 getCheckInstance().SubscribeByUser(context.FromQQ, room);
 
                 string ownerName = getCheckInstance().getOwnerName(room);
@@ -23,6 +29,12 @@
             {
                 int index = context.Msg.IndexOf('-');
                 string room = stringSecurityProcess(context.Msg.Substring(index + 1));
+                if (room == "")
+                {
+                    Common.CqApi.SendGroupMessage(context.FromQQ, "输入格式错误！");
+                    context.Handled = true;
+                    return;
+                }
                 getCheckInstance().Desubscribe(context.FromQQ, room);
 
                 string ownerName = getCheckInstance().getOwnerName(room);
@@ -53,6 +65,12 @@
             {
                 int index = e.Msg.IndexOf('-');
                 string room = stringSecurityProcess(e.Msg.Substring(index + 1));
+                if (room == "")
+                {
+                    Common.CqApi.SendGroupMessage(e.FromGroup, "输入格式错误！");
+                    e.Handled = true;
+                    return;
+                }
                 getCheckInstance().SubscribeByGroup(e.FromGroup, room);
 
                 string ownerName = getCheckInstance().getOwnerName(room);
@@ -66,6 +84,12 @@
             {
                 int index = e.Msg.IndexOf('-');
                 string room = stringSecurityProcess(e.Msg.Substring(index + 1));
+                if (room == "")
+                {
+                    Common.CqApi.SendGroupMessage(e.FromGroup, "输入格式错误！");
+                    e.Handled = true;
+                    return;
+                }
                 getCheckInstance().Desubscribe(e.FromGroup, room, 1);
 
                 string ownerName = getCheckInstance().getOwnerName(room);
@@ -86,7 +110,8 @@
         //对纯数字输入进行处理，以免出现异常，可通过重写删除
         protected virtual string stringSecurityProcess(string input)
         {
-            return long.Parse(input).ToString();
+            try { return long.Parse(input).ToString(); }
+            catch (System.FormatException) { return ""; }
         }
 
         protected abstract string getType();
