@@ -100,7 +100,10 @@ internal abstract class LiveCheck
 
     private void sendGroupMessage(string group)
     {
-        Common.CqApi.SendGroupMessage(long.Parse(group), getOnlineMessage());
+        string msg = getOnlineMessage();
+        int atAll = int.Parse(readFromFile(path)[2] as string);
+        if (atAll > 0) msg = "[CQ:at,qq=all]" + msg;
+        Common.CqApi.SendGroupMessage(long.Parse(group), msg);
     }
 
     private void sendPrivateMessage(string qq)
@@ -108,10 +111,10 @@ internal abstract class LiveCheck
         Common.CqApi.SendPrivateMessage(long.Parse(qq), getOnlineMessage());
     }
 
-    //获取群组订阅列表
-    public string getGroupSubscribe(long group)
+    //获取订阅列表
+    public string getUserSubscribe(long user)
     {
-        string str = getSQLiteManager().getGroupSubscribeList(group);
+        string str = getSQLiteManager().getUserSubscribeList(user);
         if (str == "") return "列表为空！";
         string[] array = str.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
         string output = "";
@@ -123,13 +126,9 @@ internal abstract class LiveCheck
         return output;
     }
 
-    private string getOnlineMessage() //对返回的消息模板进行进一步处理
+    private string getOnlineMessage() //对返回的消息模板进行进一步处理，为附加前后缀处理预留接口
     {
-        string msg = "";
-        int atAll = int.Parse(readFromFile(path)[2] as string);
-        if (atAll > 0) msg += "[CQ,at=all]";
-        msg += getOnlineMessageModel();
-        return msg;
+        return getOnlineMessageModel();
     }
 
     public void SubscribeByUser(long user, string room)

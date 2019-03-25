@@ -175,9 +175,9 @@ internal abstract class SQLiteManager
     }
 
     //获取群组的订阅列表
-    public string getGroupSubscribeList(long group)
+    public string getUserSubscribeList(long user)
     {
-        List<SubScribeUser> temp = _connection.Query<SubScribeUser>("SELECT sub_rooms FROM SubScribeUser WHERE user = ?", group);
+        List<SubScribeUser> temp = _connection.Query<SubScribeUser>("SELECT sub_rooms FROM SubScribeUser WHERE user = ?", user);
         if (temp.Count <= 0) return "";
         return temp[0].sub_rooms;
     }

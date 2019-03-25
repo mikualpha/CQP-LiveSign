@@ -32,6 +32,11 @@
                 return;
             }
 
+            if (context.Msg.Contains("/" + getType() + "订阅查询"))
+            {
+                Common.CqApi.SendPrivateMessage(context.FromQQ, "您的" + getType() + "订阅列表如下：\r\n" + getCheckInstance().getUserSubscribe(context.FromQQ));
+            }
+
             context.Handled = false;
         }
 
@@ -72,7 +77,7 @@
 
             if (e.Msg.Contains("/" + getType() + "订阅查询"))
             {
-                Common.CqApi.SendGroupMessage(e.FromGroup, "本群" + getType() + "订阅列表如下：\r\n" + getCheckInstance().getGroupSubscribe(e.FromGroup));
+                Common.CqApi.SendGroupMessage(e.FromGroup, "本群" + getType() + "订阅列表如下：\r\n" + getCheckInstance().getUserSubscribe(e.FromGroup));
             }
 
             e.Handled = false;
