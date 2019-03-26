@@ -80,8 +80,9 @@ internal abstract class LiveCheck
             {
 
                 int room_status = getDataRoomStatus(i);
-                
-                if (room_status != (int)LivingStatus.ERROR && getSQLiteManager().getLiveStatus(i) != room_status)
+                if (room_status == (int)LivingStatus.ERROR) continue;
+
+                if (getSQLiteManager().getLiveStatus(i) != room_status)
                 {
                     getSQLiteManager().setLiveStatus(i, room_status);
                     if (room_status == (int)LivingStatus.ONLINE) //正在直播

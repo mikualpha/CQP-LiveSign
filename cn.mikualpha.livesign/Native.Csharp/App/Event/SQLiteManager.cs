@@ -19,7 +19,6 @@ internal abstract class SQLiteManager
     private void createTable()
     {
         _connection.CreateTable<SubScribeUser>();
-        _connection.CreateTable<SubScribeRoom>();
         _connection.CreateTable<SubScribeStatus>();
     }
 
@@ -93,8 +92,6 @@ internal abstract class SQLiteManager
 
     private void addRoom(string _room)
     {
-        _connection.Insert(new SubScribeRoom() { room = _room }, "OR IGNORE");
-
         _connection.Insert(new SubScribeStatus()
         {
             room = _room,
@@ -108,7 +105,6 @@ internal abstract class SQLiteManager
 
     private void deleteRoom(string _room)
     {
-        _connection.Delete(new SubScribeRoom() { room = _room });
         _connection.Delete(new SubScribeStatus() { room = _room });
     }
 
@@ -164,7 +160,7 @@ internal abstract class SQLiteManager
     //获取所有的房间列表
     public string[] getRooms()
     {
-        List<SubScribeRoom> temp = _connection.Query<SubScribeRoom>("SELECT room FROM SubScribeRoom");
+        List<SubScribeStatus> temp = _connection.Query<SubScribeStatus>("SELECT room FROM SubScribeStatus");
         string output = "";
         for (int i = 0; i < temp.Count; ++i)
         {
@@ -207,15 +203,6 @@ internal abstract class SQLiteManager
         public string sub_rooms { get; set; }
         [NotNull]
         public int is_group { get; set; }
-    }
-
-    protected class SubScribeRoom
-    {
-        [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
-
-        [Unique]
-        public string room { get; set; }
     }
 
     protected class SubScribeStatus
