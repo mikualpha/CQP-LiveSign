@@ -116,6 +116,6 @@
 
         protected abstract string getType();
 
-        protected abstract LiveCheck getCheckInstance();
+        internal abstract LiveCheck getCheckInstance();
     }
 }

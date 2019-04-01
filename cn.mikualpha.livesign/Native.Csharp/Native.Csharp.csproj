@@ -104,6 +104,9 @@
     <Compile Include="App\Event\Event_GroupMessage.cs" />
     <Compile Include="App\Event\Event_OtherMessage.cs" />
     <Compile Include="App\Event\Event_UserExpand.cs" />
+    <Compile Include="App\Event\KingkongLiveCheck.cs" />
+    <Compile Include="App\Event\KingkongMessageProcess.cs" />
+    <Compile Include="App\Event\KingkongSQLiteManager.cs" />
     <Compile Include="App\Event\LiveCheck.cs" />
     <Compile Include="App\Event\MessageProcess.cs" />
     <Compile Include="App\Event\MessageProcessInterface.cs" />

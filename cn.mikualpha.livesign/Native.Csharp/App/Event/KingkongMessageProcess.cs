@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Native.Csharp.App.Event
 {
-    class BilibiliMessageProcess : MessageProcess
+    class KingkongMessageProcess : MessageProcess
     {
         #region --单例模式--
-        private static BilibiliMessageProcess ins = new BilibiliMessageProcess();
-        private BilibiliMessageProcess() { }
+        private static KingkongMessageProcess ins = new KingkongMessageProcess();
+        private KingkongMessageProcess() { }
 
         public static MessageProcess getInstance() { return ins; }
 
@@ -18,12 +18,12 @@ namespace Native.Csharp.App.Event
         #region --接口定义--
         protected override string getType()
         {
-            return "B站";
+            return "金刚";
         }
 
         internal override LiveCheck getCheckInstance()
         {
-            return BilibiliLiveCheck.getInstance();
+            return KingkongLiveCheck.getInstance();
         }
         #endregion
     }

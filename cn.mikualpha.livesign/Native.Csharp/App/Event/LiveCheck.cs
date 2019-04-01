@@ -80,6 +80,7 @@ internal abstract class LiveCheck
             {
 
                 int room_status = getDataRoomStatus(i);
+                Common.CqApi.AddLoger(Native.Csharp.Sdk.Cqp.Enum.LogerLevel.Debug, "LivingStatusDebug-" + i, room_status.ToString());
                 if (room_status == (int)LivingStatus.ERROR) continue;
 
                 if (getSQLiteManager().getLiveStatus(i) != room_status)

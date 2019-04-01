@@ -71,15 +71,15 @@ class BilibiliLiveCheck : LiveCheck
 
     protected class BilibiliDataTemp
     {
-        public BilibiliData data;
+        public BilibiliData data { get; set; }
     }
 
     protected class BilibiliData
     {
-        public int room_id;
-        public string status;
-        public string title;
-        public string uname;
+        public int room_id { get; set; }
+        public string status { get; set; }
+        public string title { get; set; }
+        public string uname { get; set; }
     }
     #endregion
 }

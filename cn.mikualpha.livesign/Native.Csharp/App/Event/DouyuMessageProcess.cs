@@ -21,7 +21,7 @@ namespace Native.Csharp.App.Event
             return "斗鱼";
         }
 
-        protected override LiveCheck getCheckInstance()
+        internal override LiveCheck getCheckInstance()
         {
             return DouyuLiveCheck.getInstance();
         }

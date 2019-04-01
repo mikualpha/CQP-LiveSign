@@ -73,14 +73,14 @@ class DouyuLiveCheck : LiveCheck
 
     protected class DouyuDataTemp
     {
-        public DouyuData data;
+        public DouyuData data { get; set; }
     }
 
     protected class DouyuData
     {
-        public int room_id;
-        public string room_status;
-        public string owner_name;
+        public int room_id { get; set; }
+        public string room_status { get; set; }
+        public string owner_name { get; set; }
     }
     #endregion
 }
