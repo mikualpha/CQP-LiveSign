@@ -44,7 +44,7 @@ class BilibiliLiveCheck : LiveCheck
     {
         dataTemp = getJson(room);
         if (dataTemp == null) return (int)LivingStatus.ERROR;
-        return int.Parse(dataTemp.status);
+        return (int)(dataTemp.status == "LIVE" ? LivingStatus.ONLINE : LivingStatus.OFFLINE);
     }
 
     protected override string getOnlineMessageModel()
