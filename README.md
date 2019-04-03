@@ -1,5 +1,5 @@
 # CQP-LiveSign
-一个基于[CoolQ平台](https://cqp.cc/forum.php)的直播间开播提醒工具（目前支持BILIBILI、斗鱼、KingKongTV）。
+一个基于[CoolQ平台](https://cqp.cc/forum.php)的直播间开播提醒工具（目前支持BILIBILI、斗鱼、Twitch、KingKongTV）。
 
 本插件基于C#语言编写。
 
