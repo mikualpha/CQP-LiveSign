@@ -1,19 +1,40 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Text;
 using System.Threading;
 using Native.Csharp.App;
+using Native.Csharp.Tool.Http;
 
 internal abstract class LiveCheck
 {
     private Thread thread = null;
     protected readonly string dir = Common.CqApi.GetAppDirectory();
     protected readonly string path = Common.CqApi.GetAppDirectory() + "Config.ini";
+    protected Dictionary<string, string> fileOptions = new Dictionary<string, string>();
+
     private string[] groups, admins;
     public bool running = false;
     internal enum LivingStatus { OFFLINE, ONLINE, OTHER, ERROR };
 
-    internal LiveCheck() { initalizeFile(); }
+    internal LiveCheck() {
+        initalizeFile();
+        initalizeOptions();
+    }
+
+    private void initalizeOptions()
+    {
+        fileOptions.Clear();
+        fileOptions["Group"] = "0";
+        fileOptions["Admin"] = "0";
+        fileOptions["AtAll"] = "0";
+        fileOptions["EnableProxy"] = "0";
+        fileOptions["ProxyAddress"] = "127.0.0.1";
+        fileOptions["ProxyPort"] = "1080";
+        readFromFile(path);
+    }
 
     private bool initalizeFile()
     {
@@ -22,9 +43,17 @@ internal abstract class LiveCheck
 
         FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
         StreamWriter writer = new StreamWriter(fs);
-        writer.Write("Group=0\r\n" +
-                    "Admin=0\r\n" + 
-                    "AtAll=0\r\n");
+        writer.Write("//请仅修改等号后部分，其余部分修改可能会出现问题！\r\n" +
+                    "//需要在哪些群中启用，以半角逗号分隔，标0为全部启用\r\n" +
+                    "Group=0\r\n" +
+                    "//允许哪些群成员修改群订阅设置，标0为全部可更改\r\n" +
+                    "Admin=0\r\n" +
+                    "//在群组中提醒时是否需要@全体成员，0为禁用，1为启用\r\n" + 
+                    "AtAll=0\r\n" +
+                    "//是否对部分平台启用代理，0为禁用，1为启用\r\n" +
+                    "EnableProxy=0\r\n" + 
+                    "ProxyAddress=127.0.0.1\r\n" + 
+                    "ProxyPort=1080");
         writer.Close();
         fs.Close();
         return true;
@@ -32,7 +61,7 @@ internal abstract class LiveCheck
 
     public bool isGroup(string input)
     {
-        groups = (readFromFile(path)[0] as string).Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        groups = (fileOptions["Group"] as string).Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (string i in groups)
         {
             if (i == "0") return true;
@@ -43,7 +72,7 @@ internal abstract class LiveCheck
 
     public bool isAdmin(string input)
     {
-        admins = (readFromFile(path)[1] as string).Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        admins = (fileOptions["Admin"] as string).Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (string i in admins)
         {
             if (i == "0") return true;
@@ -80,7 +109,7 @@ internal abstract class LiveCheck
             {
 
                 int room_status = getDataRoomStatus(i);
-                Common.CqApi.AddLoger(Native.Csharp.Sdk.Cqp.Enum.LogerLevel.Debug, "LivingStatusDebug-" + i, room_status.ToString());
+                //Common.CqApi.AddLoger(Native.Csharp.Sdk.Cqp.Enum.LogerLevel.Debug, "LivingStatusDebug-" + i, room_status.ToString());
                 if (room_status == (int)LivingStatus.ERROR) continue;
 
                 if (getSQLiteManager().getLiveStatus(i) != room_status)
@@ -103,7 +132,7 @@ internal abstract class LiveCheck
     private void sendGroupMessage(string group)
     {
         string msg = getOnlineMessage();
-        int atAll = int.Parse(readFromFile(path)[2] as string);
+        int atAll = int.Parse(fileOptions["AtAll"] as string);
         if (atAll > 0) msg = "[CQ:at,qq=all]" + msg;
         Common.CqApi.SendGroupMessage(long.Parse(group), msg);
     }
@@ -148,9 +177,8 @@ internal abstract class LiveCheck
         getSQLiteManager().deleteSubscribe(user.ToString(), room, group);
     }
 
-    private ArrayList readFromFile(string _path)
+    protected void readFromFile(string _path)
     {
-        ArrayList result = new ArrayList();
         if (!File.Exists(_path)) initalizeFile();
 
         using (StreamReader sr = new StreamReader(_path))
@@ -158,12 +186,39 @@ internal abstract class LiveCheck
             string line = "";
             while ((line = sr.ReadLine()) != null)
             {
-                string temp = line.Substring(line.IndexOf('=') + 1);
-                result.Add(temp);
+                if (line.Contains("//")) continue;
+                string[] temp = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                fileOptions[temp[0].Trim()] = temp[1].Trim();
             }
         }
+    }
 
-        return result;
+    protected string getProxyAddress()
+    {
+        return fileOptions["ProxyAddress"];
+    }
+
+    protected int getProxyPort()
+    {
+        return int.Parse(fileOptions["ProxyPort"]);
+    }
+
+    protected string getHttpProxy(string url)
+    {
+        try
+        {
+            if (int.Parse(fileOptions["EnableProxy"]) > 0)
+            {
+                WebHeaderCollection webHeaderCollection = new WebHeaderCollection();
+                CookieCollection cookies = new CookieCollection();
+                return Encoding.UTF8.GetString(HttpWebClient.Get(url, "", ref cookies, ref webHeaderCollection, new WebProxy(getProxyAddress(), getProxyPort()), Encoding.UTF8));
+            }
+            else
+            {
+                return Encoding.UTF8.GetString(HttpWebClient.Get(url));
+            }
+        } catch (WebException) { return ""; }
+        
     }
 
     protected abstract SQLiteManager getSQLiteManager(); //获取SQLite管理实例
@@ -176,4 +231,8 @@ internal abstract class LiveCheck
 
     protected abstract string getOnlineMessageModel(); //获取发送消息格式
 
+    protected class FileOption //配置项
+    {
+
+    }
 }

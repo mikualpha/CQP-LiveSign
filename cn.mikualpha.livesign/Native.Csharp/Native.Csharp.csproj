@@ -111,6 +111,9 @@
     <Compile Include="App\Event\MessageProcess.cs" />
     <Compile Include="App\Event\MessageProcessInterface.cs" />
     <Compile Include="App\Event\SQLiteManager.cs" />
+    <Compile Include="App\Event\TwitchLiveCheck.cs" />
+    <Compile Include="App\Event\TwitchMessageProcess.cs" />
+    <Compile Include="App\Event\TwitchSQLiteManager.cs" />
     <Compile Include="App\Interface\IEvent_AppStatus.cs" />
     <Compile Include="App\Interface\IEvent_DiscussMessage.cs" />
     <Compile Include="App\Interface\IEvent_FriendMessage.cs" />
