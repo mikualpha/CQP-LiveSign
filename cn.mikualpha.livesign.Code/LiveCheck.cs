@@ -206,26 +206,26 @@ internal abstract class LiveCheck
     {
         try
         {
-            if (int.Parse(fileOptions["EnableProxy"]) > 0)
+            WebHeaderCollection webHeaderCollection = new WebHeaderCollection();
+            CookieCollection cookies = new CookieCollection();
+            string accept = "";
+
+            if (header != null)
             {
-                WebHeaderCollection webHeaderCollection = new WebHeaderCollection();
-                CookieCollection cookies = new CookieCollection();
-                string accept = "";
-
-                if (header != null)
+                foreach (KeyValuePair<string, string> kv in header)
                 {
-                    foreach (KeyValuePair<string, string> kv in header)
-                    {
-                        if (kv.Key == "Accept") accept = kv.Value;
-                        else webHeaderCollection.Add(kv.Key, kv.Value);
-                    }
-
+                    if (kv.Key == "Accept") accept = kv.Value;
+                    else webHeaderCollection.Add(kv.Key, kv.Value);
                 }
+
+            }
+
+            if (int.Parse(getOptions()["EnableProxy"]) > 0) {
                 return Encoding.UTF8.GetString(HttpWebClient.Get(url, "", "", accept, 0, ref cookies, ref webHeaderCollection, new WebProxy(getProxyAddress(), getProxyPort()), Encoding.UTF8));
             }
             else
             {
-                return Encoding.UTF8.GetString(HttpWebClient.Get(url));
+                return Encoding.UTF8.GetString(HttpWebClient.Get(url, "", "", accept, 0, ref cookies, ref webHeaderCollection, null, Encoding.UTF8));
             }
         } catch (WebException) { return ""; }
         
