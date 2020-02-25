@@ -4,63 +4,21 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
-using cn.mikualpha.livesign.Code;
-using Native.Csharp.Tool.Http;
+using Native.Tool.Http;
 
 internal abstract class LiveCheck
 {
     private Thread thread = null;
-    protected readonly string dir = ApiModel.CQApi.AppDirectory;
-    protected readonly string path = ApiModel.CQApi.AppDirectory + "Config.ini";
-    protected Dictionary<string, string> fileOptions = new Dictionary<string, string>();
 
     private string[] groups, admins;
     public bool running = false;
     internal enum LivingStatus { OFFLINE, ONLINE, OTHER, ERROR };
 
-    internal LiveCheck() {
-        initalizeFile();
-        initalizeOptions();
-    }
-
-    private void initalizeOptions()
-    {
-        fileOptions.Clear();
-        fileOptions["Group"] = "0";
-        fileOptions["Admin"] = "0";
-        fileOptions["AtAll"] = "0";
-        fileOptions["EnableProxy"] = "0";
-        fileOptions["ProxyAddress"] = "127.0.0.1";
-        fileOptions["ProxyPort"] = "1080";
-        readFromFile(path);
-    }
-
-    private bool initalizeFile()
-    {
-        if (File.Exists(path)) return false;
-        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-
-        FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
-        StreamWriter writer = new StreamWriter(fs);
-        writer.Write("//请仅修改等号后部分，其余部分修改可能会出现问题！\r\n" +
-                    "//需要在哪些群中启用，以半角逗号分隔，标0为全部启用\r\n" +
-                    "Group=0\r\n" +
-                    "//允许哪些群成员修改群订阅设置\r\n" +
-                    "Admin=123456789,987654321\r\n" +
-                    "//在群组中提醒时是否需要@全体成员，0为禁用，1为启用\r\n" + 
-                    "AtAll=0\r\n" +
-                    "//是否对部分平台启用代理，0为禁用，1为启用\r\n" +
-                    "EnableProxy=0\r\n" + 
-                    "ProxyAddress=127.0.0.1\r\n" + 
-                    "ProxyPort=1080");
-        writer.Close();
-        fs.Close();
-        return true;
-    }
+    internal LiveCheck() { }
 
     public bool isGroup(string input)
     {
-        groups = (fileOptions["Group"] as string).Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        groups = (getOptions()["Group"] as string).Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (string i in groups)
         {
             if (i == "0") return true;
@@ -71,7 +29,7 @@ internal abstract class LiveCheck
 
     public bool isAdmin(string input)
     {
-        admins = (fileOptions["Admin"] as string).Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        admins = (getOptions()["Admin"] as string).Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
         foreach (string i in admins)
         {
             if (i == "0") return true;
@@ -131,7 +89,7 @@ internal abstract class LiveCheck
     private void sendGroupMessage(string group)
     {
         string msg = getOnlineMessage();
-        int atAll = int.Parse(fileOptions["AtAll"] as string);
+        int atAll = int.Parse(getOptions()["AtAll"] as string);
         if (atAll > 0) msg = "[CQ:at,qq=all]" + msg;
         ApiModel.CQApi.SendGroupMessage(long.Parse(group), msg);
     }
@@ -156,6 +114,8 @@ internal abstract class LiveCheck
         return output;
     }
 
+    protected Dictionary<string, string> getOptions() { return FileOptions.GetInstance().GetOptions(); }
+
     private string getOnlineMessage() //对返回的消息模板进行进一步处理，为附加前后缀处理预留接口
     {
         return getOnlineMessageModel();
@@ -176,30 +136,14 @@ internal abstract class LiveCheck
         getSQLiteManager().deleteSubscribe(user.ToString(), room, group);
     }
 
-    protected void readFromFile(string _path)
-    {
-        if (!File.Exists(_path)) initalizeFile();
-
-        using (StreamReader sr = new StreamReader(_path))
-        {
-            string line = "";
-            while ((line = sr.ReadLine()) != null)
-            {
-                if (line.Contains("//")) continue;
-                string[] temp = line.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                fileOptions[temp[0].Trim()] = temp[1].Trim();
-            }
-        }
-    }
-
     protected string getProxyAddress()
     {
-        return fileOptions["ProxyAddress"];
+        return getOptions()["ProxyAddress"];
     }
 
     protected int getProxyPort()
     {
-        return int.Parse(fileOptions["ProxyPort"]);
+        return int.Parse(getOptions()["ProxyPort"]);
     }
 
     protected string getHttpProxy(string url, Dictionary<string, string> header = null)
