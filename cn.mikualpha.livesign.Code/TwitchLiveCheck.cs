@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Native.Csharp.Tool.Http;
+using Native.Tool.Http;
 using System.Text;
 using System.Net;
 using System;
@@ -78,9 +78,18 @@ class TwitchLiveCheck : LiveCheck
     protected override string getOnlineMessageModel()
     {
         string msg = "主播[" + dataTemp.display_name + "]开播啦！" +
-            (dataTemp.display_name == "wuyikoei" ? "（爽粉们米缸开啦！）" : "") +
+            getEasterEggStr(dataTemp.display_name) +
             "\n直播间地址：" + dataTemp.url;
         return msg;
+    }
+
+    protected override string getEasterEggStr(string id)
+    {
+        string output = "";
+        if (getOptions()["EasterEgg"] == "0") return output;
+
+        output += (id == "wuyikoei" ? "（爽粉们米缸开啦！）" : "");
+        return output;
     }
 
     private TwitchChannel getChannelJson(string room)

@@ -1,6 +1,4 @@
-﻿using cn.mikualpha.livesign.Code;
-
-class TwitchSQLiteManager : SQLiteManager
+﻿class TwitchSQLiteManager : SQLiteManager
 {
     private static TwitchSQLiteManager ins = new TwitchSQLiteManager();
     private TwitchSQLiteManager() { }

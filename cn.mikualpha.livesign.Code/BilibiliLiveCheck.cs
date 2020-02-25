@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Native.Csharp.Tool.Http;
+using Native.Tool.Http;
 using System.Text;
 using System;
 
@@ -49,8 +49,14 @@ class BilibiliLiveCheck : LiveCheck
     protected override string getOnlineMessageModel()
     {
         string msg = "主播[" + dataTemp.anchor_info.base_info.uname + "]开播啦！" +
+            getEasterEggStr(dataTemp.room_info.room_id.ToString()) +
             "\n直播间地址：https://live.bilibili.com/" + dataTemp.room_info.room_id.ToString();
         return msg;
+    }
+
+    protected override string getEasterEggStr(string id)
+    {
+        return "";
     }
 
     private BilibiliData getJson(string room)

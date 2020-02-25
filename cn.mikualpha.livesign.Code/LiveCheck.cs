@@ -184,4 +184,6 @@ internal abstract class LiveCheck
     protected abstract string getHttp(string room); //API内容获取(处理另行实现)
 
     protected abstract string getOnlineMessageModel(); //获取发送消息格式
+
+    protected abstract string getEasterEggStr(string room_id); //获取彩蛋语句
 }

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Native.Csharp.Tool.Http;
+using Native.Tool.Http;
 using System.Text;
 using System;
 using System.Collections.Generic;
@@ -61,9 +61,18 @@ class KingkongLiveCheck : LiveCheck
     protected override string getOnlineMessageModel()
     {
         string msg = "主播[" + userTemp.nickname + "]开播啦！" +
-            (long.Parse(userTemp.room_id) == 3116963 ? "（爽粉们米缸开啦！）" : "") +
+            getEasterEggStr(userTemp.room_id) +
             "\n直播间地址：https://www.kingkong.com.tw/" + userTemp.room_id;
         return msg;
+    }
+
+    protected override string getEasterEggStr(string id)
+    {
+        string output = "";
+        if (getOptions()["EasterEgg"] == "0") return output;
+
+        output += (id == "3116963" ? "（爽粉们米缸开啦！）" : "");
+        return output;
     }
 
     private KingkongData getJson(string room)

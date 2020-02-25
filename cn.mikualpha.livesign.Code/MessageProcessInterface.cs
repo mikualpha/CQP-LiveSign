@@ -1,11 +1,17 @@
-﻿using Native.Csharp.Sdk.Cqp.EventArgs;
+﻿using Native.Sdk.Cqp.EventArgs;
 using System.Collections.Generic;
 
 
 class MessageProcessInterface
 {
     //TO-DO：添加新接口时更改此项
-    private static List<MessageProcess> list = new List<MessageProcess> { DouyuMessageProcess.getInstance(), BilibiliMessageProcess.getInstance(), KingkongMessageProcess.getInstance(), TwitchMessageProcess.getInstance() };
+    private static List<MessageProcess> list = new List<MessageProcess> {
+        DouyuMessageProcess.getInstance(),
+        BilibiliMessageProcess.getInstance(),
+        KingkongMessageProcess.getInstance(),
+        TwitchMessageProcess.getInstance()
+    };
+
     //调用接口汇总，方便统一修改
     public static void processPrivateMessage(CQPrivateMessageEventArgs context)
     {

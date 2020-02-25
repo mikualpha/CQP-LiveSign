@@ -1,6 +1,4 @@
-﻿using cn.mikualpha.livesign.Code;
-
-class KingkongSQLiteManager : SQLiteManager
+﻿class KingkongSQLiteManager : SQLiteManager
 {
     private static KingkongSQLiteManager ins = new KingkongSQLiteManager();
     private KingkongSQLiteManager() { }

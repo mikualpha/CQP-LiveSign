@@ -1,6 +1,4 @@
-﻿using cn.mikualpha.livesign.Code;
-
-class DouyuSQLiteManager : SQLiteManager
+﻿class DouyuSQLiteManager : SQLiteManager
 {
     private static DouyuSQLiteManager ins = new DouyuSQLiteManager();
     private DouyuSQLiteManager() { }

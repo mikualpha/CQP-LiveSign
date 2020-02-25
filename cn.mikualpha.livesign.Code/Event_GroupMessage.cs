@@ -1,5 +1,5 @@
-﻿using Native.Csharp.Sdk.Cqp.EventArgs;
-using Native.Csharp.Sdk.Cqp.Interface;
+﻿using Native.Sdk.Cqp.EventArgs;
+using Native.Sdk.Cqp.Interface;
 
 public class Event_GroupMessage : IGroupMessage
 {

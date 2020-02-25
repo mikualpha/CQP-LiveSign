@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Native.Csharp.Tool.Http;
+using Native.Tool.Http;
 using System.Text;
 using System.Net;
 using System;
@@ -29,7 +29,6 @@ class DouyuLiveCheck : LiveCheck
         } catch (Exception) {
             return "";
         }
-
     }
 
     public override string getOwnerName(string room)
@@ -50,10 +49,18 @@ class DouyuLiveCheck : LiveCheck
     protected override string getOnlineMessageModel()
     {
         string msg = "主播[" + dataTemp.owner_name + "]开播啦！" +
-            (dataTemp.room_id == 6655 ? "（爽粉们米缸开啦！）" : "") +
-            (dataTemp.room_id == 3484 ? "孙一峰永远是我大哥！" : "") +
+            getEasterEggStr(dataTemp.room_id.ToString()) + 
             "\n直播间地址：https://www.douyu.com/" + dataTemp.room_id.ToString();
         return msg;
+    }
+
+    protected override string getEasterEggStr(string id) {
+        string output = "";
+        if (getOptions()["EasterEgg"] == "0") return output;
+
+        output += (id == "6655" ? "（爽粉们米缸开啦！）" : "");
+        output += (id == "3484" ? "孙一峰永远是我大哥！" : "");
+        return output;
     }
 
     private DouyuData getJson(string room)

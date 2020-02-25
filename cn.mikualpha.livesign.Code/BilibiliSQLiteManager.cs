@@ -1,6 +1,4 @@
-﻿using cn.mikualpha.livesign.Code;
-
-class BilibiliSQLiteManager : SQLiteManager
+﻿class BilibiliSQLiteManager : SQLiteManager
 {
     private static BilibiliSQLiteManager ins = new BilibiliSQLiteManager();
     private BilibiliSQLiteManager() { }

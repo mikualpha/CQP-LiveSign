@@ -1,4 +1,4 @@
-﻿using Native.Csharp.Sdk.Cqp.EventArgs;
+﻿using Native.Sdk.Cqp.EventArgs;
 
 internal abstract class MessageProcess
 {
