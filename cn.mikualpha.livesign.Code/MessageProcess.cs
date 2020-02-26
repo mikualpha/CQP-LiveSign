@@ -68,7 +68,7 @@ internal abstract class MessageProcess
     public void processGroupMsg(CQGroupMessageEventArgs e)
     {
         //若发送用户及群组不在列表，则直接跳出
-        if (!getCheckInstance().isAdmin(e.FromQQ.ToString()) || !getCheckInstance().isGroup(e.FromGroup.ToString()) || e.IsFromAnonymous)
+        if (!getCheckInstance().isAdmin(e.FromQQ.Id.ToString()) || !getCheckInstance().isGroup(e.FromGroup.Id.ToString()) || e.IsFromAnonymous)
         {
             e.Handler = false;
             return;

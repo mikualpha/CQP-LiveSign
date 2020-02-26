@@ -3,7 +3,7 @@ using Native.Sdk.Cqp.EventArgs;
 using Native.Sdk.Cqp.Interface;
 using System;
 
-public class Event_AppStatus : IAppEnable, IAppDisable
+public class Event_AppStatus : IAppEnable, IAppDisable, ICQStartup
 {
 	#region --公开方法--
 	/// <summary>
@@ -17,8 +17,6 @@ public class Event_AppStatus : IAppEnable, IAppDisable
         // 当应用被启用后，将收到此事件。
         // 如果酷Q载入时应用已被启用，则在_eventStartup(Type=1001,酷Q启动)被调用后，本函数也将被调用一次。
         // 如非必要，不建议在这里加载窗口。（可以添加菜单，让用户手动打开窗口）
-        ApiModel.setModel(e.CQApi, e.CQLog);
-        FileOptions.GetInstance();
         MessageProcessInterface.startCheck();
     }
 
@@ -35,5 +33,11 @@ public class Event_AppStatus : IAppEnable, IAppDisable
 		// 无论本应用是否被启用，酷Q关闭前本函数都【不会】被调用。
         MessageProcessInterface.endCheck();
     }
-	#endregion
+
+    public void CQStartup(object sender, CQStartupEventArgs e)
+    {
+        ApiModel.setModel(e.CQApi, e.CQLog);
+        FileOptions.GetInstance();
+    }
+    #endregion
 }

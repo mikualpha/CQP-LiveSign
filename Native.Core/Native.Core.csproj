@@ -170,4 +170,5 @@ if exist "$(TargetDir)app.json" (
 move "$(TargetDir)app.json" "$(TargetDir)$(TargetName)" 
 )</PostBuildEvent>
   </PropertyGroup>
+  <ProjectExtensions />
 </Project>
