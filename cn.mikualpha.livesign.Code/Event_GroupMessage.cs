@@ -19,6 +19,7 @@ public class Event_GroupMessage : IGroupMessage
 			e.Handler = false;
 			return;
 		}
+
         MessageProcessInterface.processGroupMessage(e);
 	}
 	#endregion

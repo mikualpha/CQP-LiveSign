@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using Native.Sdk.Cqp.Enum;
 using Native.Tool.Http;
 
 internal abstract class LiveCheck
@@ -89,8 +90,9 @@ internal abstract class LiveCheck
     private void sendGroupMessage(string group)
     {
         string msg = getOnlineMessage();
-        int atAll = int.Parse(getOptions()["AtAll"] as string);
-        if (atAll > 0) msg = "[CQ:at,qq=all]" + msg;
+        int atAll = int.Parse(getOptions()["AtAll"]);
+        int userType = (int)ApiModel.CQApi.GetGroupMemberInfo(long.Parse(group), ApiModel.CQApi.GetLoginQQ().Id).MemberType;
+        if (atAll > 0 && userType > 1 /* 非普通群员 */) msg = "[CQ:at,qq=all] " + msg;
         ApiModel.CQApi.SendGroupMessage(long.Parse(group), msg);
     }
 

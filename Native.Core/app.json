@@ -5,8 +5,8 @@
   "ret": 1, // 返回码，固定为1
   "apiver": 9,
   "name": "直播开播提醒",
-  "version": "1.4.6",
-  "version_id": 1021,
+  "version": "1.4.7",
+  "version_id": 1022,
   "author": "初音未来Alpha",
   "description": "直播平台开播提醒（斗鱼、Bilibili、Twitch、KingKong等）",
   "event": [ // 事件列表，同一事件类型可重复定义（发布前请删除无用事件）
@@ -68,6 +68,12 @@
   ],
   "auth": [ // 应用权限（发布前请删除无用权限）
     101, //发送群消息			sendGroupMsg
-    106 //发送私聊消息		sendPrivateMsg
+    106, //发送私聊消息		sendPrivateMsg
+    130, //取群成员信息       getGroupMemberInfo
+    131, //取陌生人信息       getStrangerInfo
+    132, //取群信息           getGroupInfo
+    160, //取群成员列表       getGroupMemberList
+    161, //取群列表           getGroupList
+    162 //取好友列表         getFriendList
   ]
 }
