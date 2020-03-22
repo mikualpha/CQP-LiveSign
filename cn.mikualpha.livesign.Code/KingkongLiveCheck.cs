@@ -47,6 +47,7 @@ class KingkongLiveCheck : LiveCheck
     protected override int getDataRoomStatus(string room)
     {
         KingkongData dataTemp = getJson(room);
+        if (dataTemp == null) return (int)LivingStatus.ERROR;
         foreach (KingkongUser user in dataTemp.users)
         {
             if (user.room_id == room)
