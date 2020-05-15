@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <DllExportIdent>D63C3FB7-18B9-4CDE-A8F4-F2ACE3FC382F</DllExportIdent>
@@ -91,10 +92,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\AppData.cs" />
+    <Compile Include="CQMain.cs" />
     <Compile Include="Export\CQEventExport.cs">
       <DependentUpon>CQExport.tt</DependentUpon>
     </Compile>
-    <Compile Include="CQMain.cs" />
     <Compile Include="Export\CQMenuExport.cs">
       <DependentUpon>CQExport.tt</DependentUpon>
     </Compile>
@@ -105,9 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Export\CQExport.log">
-      <DependentUpon>CQExport.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>CQExport.tt</DependentUpon>
     </None>
     <None Include="FodyWeavers.xml" />
     <None Include="app.json">
@@ -170,5 +171,4 @@ if exist "$(TargetDir)app.json" (
 move "$(TargetDir)app.json" "$(TargetDir)$(TargetName)" 
 )</PostBuildEvent>
   </PropertyGroup>
-  <ProjectExtensions />
 </Project>

@@ -63,7 +63,7 @@ class KingkongLiveCheck : LiveCheck
     {
         string msg = "主播[" + userTemp.nickname + "]开播啦！" +
             getEasterEggStr(userTemp.room_id) +
-            "\n直播间地址：https://www.kingkong.com.tw/" + userTemp.room_id;
+            "\n直播间地址：https://play.lang.live/" + userTemp.room_id;
         return msg;
     }
 
