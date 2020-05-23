@@ -64,7 +64,7 @@ namespace Native.App.Export
 			// 反射获取 AppData 实例	
 			Type appDataType = typeof (AppData);	
 			// 注册一个 CQApi 实例	
-			AppInfo appInfo = new AppInfo ("cn.mikualpha.livesign", 1, 9, "直播开播提醒", "1.4.4", 1020, "初音未来Alpha", "直播平台开播提醒（斗鱼、Bilibili、Twitch、KingKong等）", authCode);	
+			AppInfo appInfo = new AppInfo ("cn.mikualpha.livesign", 1, 9, "直播开播提醒", "1.4.9", 1024, "初音未来Alpha", "直播平台开播提醒（斗鱼、Bilibili、Twitch、KingKong等）", authCode);	
 			appDataType.GetRuntimeProperty ("CQApi").GetSetMethod (true).Invoke (null, new object[] { new CQApi (appInfo) });	
 			AppData.UnityContainer.RegisterInstance<CQApi> ("cn.mikualpha.livesign", AppData.CQApi);	
 			// 向容器注册一个 CQLog 实例	

@@ -5,8 +5,8 @@
   "ret": 1, // 返回码，固定为1
   "apiver": 9,
   "name": "直播开播提醒",
-  "version": "1.4.8",
-  "version_id": 1023,
+  "version": "1.4.9",
+  "version_id": 1024,
   "author": "初音未来Alpha",
   "description": "直播平台开播提醒（斗鱼、Bilibili、Twitch、KingKong等）",
   "event": [ // 事件列表，同一事件类型可重复定义（发布前请删除无用事件）
