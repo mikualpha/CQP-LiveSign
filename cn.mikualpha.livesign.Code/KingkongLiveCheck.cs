@@ -23,7 +23,7 @@ class KingkongLiveCheck : LiveCheck
     {
         try
         {
-            return Encoding.UTF8.GetString(HttpWebClient.Get("https://api.kingkongapp.com/webapi/v1/search/global?keyword=" + room));
+            return Encoding.UTF8.GetString(HttpWebClient.Get("https://api-kk.lv-play.com/webapi/v1/search/global?keyword=" + room));
         }
         catch (Exception)
         {
