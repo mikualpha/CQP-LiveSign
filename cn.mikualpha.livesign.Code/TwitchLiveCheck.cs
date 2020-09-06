@@ -38,9 +38,9 @@ class TwitchLiveCheck : LiveCheck
     {
         try
         {
-            string userJson = getHttpProxy("https://api.twitch.tv/helix/users?login=" + username, getHeaders());
+            string userJson = getHttpProxy("https://api.twitch.tv/kraken/users?login=" + username, getHeaders());
             TwitchUsers users = JsonConvert.DeserializeObject<TwitchUsers>(userJson);
-            return users.data[0].id;
+            return users.users[0]._id;
         } catch (Exception) {
             return "";
         }
@@ -121,10 +121,10 @@ class TwitchLiveCheck : LiveCheck
 
     protected class TwitchUsers
     {
-        public List<TwitchUser> data { get; set; }
+        public List<TwitchUser> users { get; set; }
         public class TwitchUser
         {
-            public string id { get; set; }
+            public string _id { get; set; }
         }
     }
 
