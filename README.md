@@ -11,7 +11,5 @@
 
 [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) ([MIT License](https://raw.githubusercontent.com/JamesNK/Newtonsoft.Json/master/LICENSE.md))
 
-[MiraiNative](https://github.com/iTXTech/mirai-native) ([GNU Affero General Public License v3.0](https://raw.githubusercontent.com/iTXTech/mirai-native/master/LICENSE))
-
 ## Community
 Gitter聊天室：[![Gitter](https://badges.gitter.im/MikuAlphaBot/community.svg)](https://gitter.im/MikuAlphaBot/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
