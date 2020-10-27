@@ -54,11 +54,6 @@ class BilibiliLiveCheck : LiveCheck
         return msg;
     }
 
-    protected override string getEasterEggStr(string id)
-    {
-        return "";
-    }
-
     private BilibiliData getJson(string room)
     {
         try

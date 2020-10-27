@@ -83,15 +83,6 @@ class TwitchLiveCheck : LiveCheck
         return msg;
     }
 
-    protected override string getEasterEggStr(string id)
-    {
-        string output = "";
-        if (getOptions()["EasterEgg"] == "0") return output;
-
-        output += (id == "wuyikoei" ? "（爽粉们米缸开啦！）" : "");
-        return output;
-    }
-
     private TwitchChannel getChannelJson(string room)
     {
         try

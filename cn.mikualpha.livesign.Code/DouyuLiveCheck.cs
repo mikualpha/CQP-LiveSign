@@ -54,15 +54,6 @@ class DouyuLiveCheck : LiveCheck
         return msg;
     }
 
-    protected override string getEasterEggStr(string id) {
-        string output = "";
-        if (getOptions()["EasterEgg"] == "0") return output;
-
-        output += (id == "6655" ? "（爽粉们米缸开啦！）" : "");
-        output += (id == "3484" ? "孙一峰永远是我大哥！" : "");
-        return output;
-    }
-
     private DouyuData getJson(string room)
     {
         try

@@ -67,15 +67,6 @@ class KingkongLiveCheck : LiveCheck
         return msg;
     }
 
-    protected override string getEasterEggStr(string id)
-    {
-        string output = "";
-        if (getOptions()["EasterEgg"] == "0") return output;
-
-        output += (id == "3116963" ? "（爽粉们米缸开啦！）" : "");
-        return output;
-    }
-
     private KingkongData getJson(string room)
     {
         try

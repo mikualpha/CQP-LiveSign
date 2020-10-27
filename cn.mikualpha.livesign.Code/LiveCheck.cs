@@ -4,7 +4,6 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
-using Native.Sdk.Cqp.Enum;
 using Native.Tool.Http;
 
 internal abstract class LiveCheck
@@ -177,6 +176,16 @@ internal abstract class LiveCheck
         
     }
 
+    //获取彩蛋语句
+    protected string getEasterEggStr(string room_id)
+    {
+        // 如果未开启开关，则跳出
+        if (getOptions()["EasterEgg"] == "0") return "";
+        Dictionary<string, string> strDict = FileOptions.GetInstance().GetSentencesOptions();
+        if (strDict.ContainsKey(room_id)) return strDict[room_id].Trim();
+        else return "";
+    }
+
     protected abstract SQLiteManager getSQLiteManager(); //获取SQLite管理实例
 
     protected abstract int getDataRoomStatus(string room); //检查开播状态
@@ -186,6 +195,4 @@ internal abstract class LiveCheck
     protected abstract string getHttp(string room); //API内容获取(处理另行实现)
 
     protected abstract string getOnlineMessageModel(); //获取发送消息格式
-
-    protected abstract string getEasterEggStr(string room_id); //获取彩蛋语句
 }
