@@ -107,6 +107,7 @@ class FileOptions
     {
         if (!File.Exists(_path)) initalizeAdditionalSentencesFile(_path);
 
+        sentenceOptions = new Dictionary<string, string>();
         using (StreamReader sr = new StreamReader(_path))
         {
             string line = "";
