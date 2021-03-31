@@ -77,11 +77,8 @@ class FileOptions
 
         FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
         StreamWriter writer = new StreamWriter(fs);
-        writer.Write("// 形式如下，一行一个，以半角冒号分隔\r\n" +
-                    "3484:孙一峰永远是我大哥！\r\n" +
-                    "6655:爽老赖谜语人WDNMD！\r\n" +
-                    "3116963:你爽的丢人操作开始了！\r\n" +
-                    "wuyikoei:你爽的丢人操作开始了！");
+        writer.Write("// 形式如下，一行一个，以半角冒号分隔，如：\r\n" +
+                    "3484:孙一峰永远是我大哥！\r\n");
         writer.Close();
         fs.Close();
         return true;
