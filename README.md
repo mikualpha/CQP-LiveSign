@@ -1,5 +1,5 @@
 # CQP-LiveSign
-一个基于[CoolQ平台](https://cqp.cc/forum.php)的直播间开播提醒工具（目前支持BILIBILI、斗鱼、Twitch、Langlive）。
+一个基于[CoolQ平台](https://cqp.cc/forum.php)的直播间开播提醒工具（目前支持BILIBILI、斗鱼、Twitch）。
 
 因CoolQ已经关闭，可采用[MiraiNative框架](https://github.com/iTXTech/mirai-native)使用本插件。
 
@@ -49,11 +49,6 @@ EasterEgg=0
 启用订阅: /Twitch订阅-[主播ID(详见地址栏)](如：/Twitch订阅-blizzard)
 禁用订阅: /Twitch取消订阅-[主播ID]
 查询订阅: /Twitch订阅查询
-
-# LangLive (原金刚)
-启用订阅: /金刚订阅-[房间号](如：/金刚订阅-1234)
-禁用订阅: /金刚取消订阅-[房间号]
-查询订阅: /金刚订阅查询
 ```
 
 ## Community
