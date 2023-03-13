@@ -50,6 +50,3 @@ EasterEgg=0
 禁用订阅: /Twitch取消订阅-[主播ID]
 查询订阅: /Twitch订阅查询
 ```
-
-## Community
-Gitter聊天室：[![Gitter](https://badges.gitter.im/MikuAlphaBot/community.svg)](https://gitter.im/MikuAlphaBot/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
